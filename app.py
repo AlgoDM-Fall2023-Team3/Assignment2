@@ -46,14 +46,14 @@ def fetch_query2(period):
         query1 = f"""
         CALL impressions_forecast!FORECAST(FORECASTING_PERIODS => {period});             
         """
-        st.write("Model Ran Successfully")
+        st.success("Model Running Successfully")
         results_1 = pd.read_sql(query1,connection)
         query2 = """
         SELECT day AS ts, impression_count AS actual, NULL AS forecast, NULL AS lower_bound, NULL AS upper_bound
         FROM daily_impressions
         """
         results_2 =pd.read_sql(query2,connection)
-        results = pd.concat([results_2,results_1])
+        results = pd.concat([results_2,results_1],ignore_index=True)
         return results
     finally:
         connection.close()
@@ -62,11 +62,10 @@ def fetch_query2(period):
 def plot_data(data):
     fig = px.area(data,x='day',y='impression_count',
                  title="Impression Count Visualisation")
-    fig.update_layout(width=800,height=700,xaxis_title='Day',yaxis_title='Impression Count')
+    fig.update_layout(width=1200,height=700,xaxis_title='Day',yaxis_title='Impression Count')
     st.plotly_chart(fig)
 
 def plot_forecast_data(data):
-    print(data.dtypes)
     fig = px.line(data,x='ts',y=['actual','forecast'], title='Forecast and Actual Trend')
     fig.update_layout(width=1200,height=700,xaxis_title='Timestamp',yaxis_title='Forecast and Actual Trend')
     st.plotly_chart(fig)
@@ -85,6 +84,7 @@ with c1:
     period = st.number_input("Select the days who want to forecast data")
     if st.button("Run Forecast Model"):
         data = fetch_query2(period)
+        st.write("Actual and Forecasted Daily Impressions Data: ")
         st.write(data)
         plot_forecast_data(data)
 
