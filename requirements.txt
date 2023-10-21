@@ -17,3 +17,4 @@ snowflake-snowpark-python
 snowflake_ml_python
 snowflake-sqlalchemy==1.5.0
 plotly-express==0.4.1
+python-dotenv==1.0.0
