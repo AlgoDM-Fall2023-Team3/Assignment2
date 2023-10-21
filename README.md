@@ -52,4 +52,5 @@ codelab documentation : https://codelabs-preview.appspot.com/?file_id=1oJGZFhSwH
 
 recording : https://northeastern.zoom.us/recording/detail?meeting_id=5i105u5HQiKmSP%2F%2BxywxFg%3D%3D
 
+Part 1 Deployed Application : https://rsscswwpcysmnsdssqjvjy.streamlit.app/
 Part 2 Deployed Application : https://assignment2-ubhy6fuuwi69lnqn4sfnkv.streamlit.app/
