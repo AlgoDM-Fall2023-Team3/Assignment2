@@ -20,15 +20,13 @@ st.title("Customer Lifetime Value Prediction")
 
 # Call functions to get Snowflake session and load data
        
-with open('secrets.toml', 'r') as toml_file:
-    secrets = tomli.load(toml_file)
 
 # Define the secrets to extract
 secrets_to_extract = {
-    'account': secrets['account'],
-    'user': secrets['user'],
-    'password': secrets['password'],
-    'warehouse': secrets['warehouse']
+    'account': st.secrets['account'],
+    'user': st.secrets['user'],
+    'password': st.secrets['password'],
+    'warehouse': st.secrets['warehouse']
 }
 
 # Write the extracted secrets to a JSON file
