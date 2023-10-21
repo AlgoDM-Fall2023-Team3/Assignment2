@@ -59,6 +59,33 @@ def fetch_query2(period):
         connection.close()
         engine.dispose()
 
+def fetch_query3(period, impression):
+    engine = create_engine(URL(
+        user=user,
+        password=password,
+        account=account_identifier,
+        database=PARENT_DATABASE_NAME,
+        schema=NESTED_DATABASE
+    ))
+    connection = engine.connect()
+    period = str(period)
+    impression = str(impression)
+    try:
+        query1 = f"""
+        CALL impression_anomaly_detector!DETECT_ANOMALIES(
+            INPUT_DATA => SYSTEM$QUERY_REFERENCE('select \\'{period}\\'::timestamp as day, {impression} as impressions'),
+            TIMESTAMP_COLNAME =>'day',
+            TARGET_COLNAME => 'impressions'
+        );
+        """
+        st.success("Model Running Successfully")
+        results_1 = pd.read_sql(query1, connection)
+        return results_1
+    finally:
+        connection.close()
+        engine.dispose()
+
+
 def plot_data(data):
     fig = px.area(data,x='day',y='impression_count',
                  title="Impression Count Visualisation")
@@ -81,11 +108,20 @@ with c1:
         st.write(results)
     if st.button("Visualise Impression Data"):
         plot_data(results)
-    period = st.number_input("Select the days who want to forecast data")
+    period = st.number_input("Select the days who want to forecast data",key="period_1")
     if st.button("Run Forecast Model"):
         data = fetch_query2(period)
         st.write("Actual and Forecasted Daily Impressions Data: ")
         st.write(data)
         plot_forecast_data(data)
+
+with c2:
+    
+    start_date = dt.date(2022,12,6) 
+    period = st.date_input("Select the days who want to detect anomaly",start_date)
+    impression = st.number_input("Select the impression count",1200)
+    if st.button("Run Anomaly Model"):
+        data = fetch_query3(period,impression)
+        st.write(data)
 
 
