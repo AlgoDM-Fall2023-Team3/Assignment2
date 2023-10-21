@@ -6,7 +6,7 @@ import streamlit as st
 import snowflake.snowpark as sp
 import warnings
 from cachetools import cached
-import plotly.express as px
+import plotly.graph_objects as go
 
 
 warnings.filterwarnings('ignore')
@@ -118,13 +118,6 @@ df_predicted_roi = session.sql(
     f"{C_BIRTH_YEAR}, {CD_DEP_COUNT}) AS PREDICTED_CLV"
 ).to_pandas()
 
-def plot_data(df_predicted_roi):
-    session.use_database("tpcds_xgboost")
-    session.use_schema("demo")
-    history = session.table("predictions")
-    fig = px.box(x=history, y=df_predicted_roi)
-    st.plotly_chart(fig)
 
 if st.button("Predict Customer Lifetime Value"):
     st.write(df_predicted_roi)  
-    plot_data(df_predicted_roi)
