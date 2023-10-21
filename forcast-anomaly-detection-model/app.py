@@ -11,17 +11,20 @@ from dotenv import load_dotenv
 PARENT_DATABASE_NAME = "AD_FORECAST_DEMO"  
 NESTED_DATABASE = "DEMO"
 
-
 load_dotenv()
 
+account=os.environ.get('account_snowflake')
+user=os.environ.get('user_snowflake')
+password=os.environ.get('password_snowflake')
+
 def fetch_query1():
-    engine = create_engine(
-        'snowflake://{user}:{password}@{account_identifier}/'.format(
-            user=os.environ.get("user"),
-            password=os.environ.get("password"),
-            account_identifier=os.environ.get("account_identifier"),
-            )
-    )
+    engine = create_engine(URL(
+            account=account,
+            user=user,
+            password=password,
+            database = PARENT_DATABASE_NAME,
+            schema = NESTED_DATABASE
+    ))
     connection = engine.connect()
     try:
         query = f"""
@@ -35,9 +38,9 @@ def fetch_query1():
 
 def fetch_query2(period):
     engine = create_engine(URL(
-            user=os.environ.get("user"),
-            password=os.environ.get("password"),
-            account_identifier=os.environ.get("account_identifier"),
+            user=user,
+            password=password,
+            account=account,
             database=PARENT_DATABASE_NAME,
             schema=NESTED_DATABASE
     ))
@@ -62,9 +65,9 @@ def fetch_query2(period):
 
 def fetch_query3(period, impression):
     engine = create_engine(URL(
-        user=os.environ.get("user"),
-        password=os.environ.get("password"),
-        account_identifier=os.environ.get("account_identifier"),
+        user=user,
+        password=password,
+        account=account,
         database=PARENT_DATABASE_NAME,
         schema=NESTED_DATABASE
     ))
@@ -124,5 +127,3 @@ with c2:
     if st.button("Run Anomaly Model"):
         data = fetch_query3(period,impression)
         st.write(data)
-
-
