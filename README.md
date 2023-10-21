@@ -48,3 +48,6 @@ To run locally,
 4. To run streamlit (files), on your terminal run  `streamlit run files.py`
 
 codelab documentation : https://codelabs-preview.appspot.com/?file_id=1oJGZFhSwHEQrpu3S1Ag-cqcNleS5fsw7rykr6lCGNPc#0
+
+
+recording : https://northeastern.zoom.us/recording/detail?meeting_id=5i105u5HQiKmSP%2F%2BxywxFg%3D%3D
