@@ -5,21 +5,22 @@ import pandas as pd
 import os
 import plotly.express  as px
 import datetime as dt
+import os
+from dotenv import load_dotenv
 
 PARENT_DATABASE_NAME = "AD_FORECAST_DEMO"  
 NESTED_DATABASE = "DEMO"
-user="Miteshs11"
-password="9987323889Mitesh."
-account_identifier="ububaop-dvb23396"
 
+
+load_dotenv()
 
 def fetch_query1():
     engine = create_engine(
         'snowflake://{user}:{password}@{account_identifier}/'.format(
-            user=user,
-            password=password,
-            account_identifier=account_identifier,
-        )
+            user=os.environ.get("user"),
+            password=os.environ.get("password"),
+            account_identifier=os.environ.get("account_identifier"),
+            )
     )
     connection = engine.connect()
     try:
@@ -34,9 +35,9 @@ def fetch_query1():
 
 def fetch_query2(period):
     engine = create_engine(URL(
-            user=user,
-            password=password,
-            account=account_identifier,
+            user=os.environ.get("user"),
+            password=os.environ.get("password"),
+            account_identifier=os.environ.get("account_identifier"),
             database=PARENT_DATABASE_NAME,
             schema=NESTED_DATABASE
     ))
@@ -61,9 +62,9 @@ def fetch_query2(period):
 
 def fetch_query3(period, impression):
     engine = create_engine(URL(
-        user=user,
-        password=password,
-        account=account_identifier,
+        user=os.environ.get("user"),
+        password=os.environ.get("password"),
+        account_identifier=os.environ.get("account_identifier"),
         database=PARENT_DATABASE_NAME,
         schema=NESTED_DATABASE
     ))
