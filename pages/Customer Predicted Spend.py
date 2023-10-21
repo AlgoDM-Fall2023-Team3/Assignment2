@@ -5,6 +5,17 @@ import json
 import pandas as pd
 #import matplotlib.pyplot as plt
 
+secrets_to_extract = {
+    'account': st.secrets['account'],
+    'user': st.secrets['user'],
+    'password': st.secrets['password'],
+    'warehouse': st.secrets['warehouse']
+}
+
+# Write the extracted secrets to a JSON file
+with open('creds.json', 'w') as json_file:
+    json.dump(secrets_to_extract, json_file, indent=4)
+    
 # Create a session to Snowflake with credentials
 with open("creds.json") as f:
     connection_parameters = json.load(f)
