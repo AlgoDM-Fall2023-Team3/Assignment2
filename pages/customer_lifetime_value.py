@@ -7,6 +7,8 @@ import snowflake.snowpark as sp
 import warnings
 from cachetools import cached
 import plotly.graph_objects as go
+import tomli
+
 
 
 warnings.filterwarnings('ignore')
@@ -18,6 +20,21 @@ st.title("Customer Lifetime Value Prediction")
 
 # Call functions to get Snowflake session and load data
        
+with open('secrets.toml', 'r') as toml_file:
+    secrets = tomli.load(toml_file)
+
+# Define the secrets to extract
+secrets_to_extract = {
+    'account': secrets['account'],
+    'user': secrets['user'],
+    'password': secrets['password'],
+    'warehouse': secrets['warehouse']
+}
+
+# Write the extracted secrets to a JSON file
+with open('creds.json', 'w') as json_file:
+    json.dump(secrets_to_extract, json_file, indent=4)
+
 def create_session():
     if "snowpark_session" not in st.session_state:
         session = Session.builder.configs(json.load(open("creds.json"))).create()
