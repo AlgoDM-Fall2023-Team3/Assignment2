@@ -46,3 +46,5 @@ To run locally,
 3. Paste the URL in a browser window and once JupyterLab comes up, switch to the work directory and make `creds.json` and give the details of your snoflake account, Warehouse, Database, and Schema details to reflect your snowflake environment.
 
 4. To run streamlit (files), on your terminal run  `streamlit run files.py`
+
+codelab documentation : https://codelabs-preview.appspot.com/?file_id=1oJGZFhSwHEQrpu3S1Ag-cqcNleS5fsw7rykr6lCGNPc#0
