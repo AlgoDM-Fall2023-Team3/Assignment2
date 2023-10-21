@@ -14,13 +14,12 @@ APP_ICON_URL = "https://i.imgur.com/dBDOHH3.png"
 secrets_to_extract = {
     'account': st.secrets['account'],
     'user': st.secrets['user'],
-    'password': st.secrets['password'],
-    'warehouse': st.secrets['warehouse']
+    'password': st.secrets['password']
 }
 
 # Write the extracted secrets to a JSON file
 with open('creds.json', 'w') as json_file:
-    json.dump(secrets_to_extract, json_file, indent=4)
+    json.dump(secrets_to_extract, json_file, indent=3)
 
 # Function to create Snowflake Session to connect to Snowflake
 def create_session():
